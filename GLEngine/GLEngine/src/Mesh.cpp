@@ -76,6 +76,25 @@ void Mesh::RemoveBuffers()
 	}
 }
 
+
+void Mesh::translate(vec3 position)
+{
+	transform = glm::translate(transform, position);
+	for (GLuint i = 0; i < meshData->getMeshCount(); ++i)
+	{
+		boundingSpheres[i].reCalcutalteSphere(transform);
+	}
+}
+void Mesh::scale(float scalar)
+{
+	transform = glm::scale(transform, vec3(scalar));
+	for (GLuint i = 0; i < meshData->getMeshCount(); ++i)
+	{
+		boundingSpheres[i].reCalcutalteSphere(transform);
+	}
+}
+
+
 void Mesh::Draw(Camera& camera)
 {
 	shader->useProgram();

@@ -37,11 +37,12 @@ public:
 
 class BoundingSphere
 {
-	glm::vec3 center;
-	float radius;
+	glm::vec3 center, origCenter;
+	float radius, origRadius;
 
 public:
 	void calculateSphere(FBXMeshNode* mesh);
+	void reCalcutalteSphere(glm::mat4& transform);
 	bool isColliding(BoundingSphere* other);
 	bool isColliding(Frustrum& frustrum);
 

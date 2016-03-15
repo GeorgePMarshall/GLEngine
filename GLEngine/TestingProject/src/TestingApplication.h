@@ -9,6 +9,8 @@
 #include <Terrain.h>
 #include <vector>
 #include <gTime.h>
+#include <imgui\imgui.h>
+#include <imgui\imgui_impl_glfw_gl3.h>
 
 //testing aplication for my opengl engine
 
@@ -25,14 +27,21 @@ class TestingApplication : public Application
 	FlyCamera camera;
 	ShaderProgram shader;
 
-	SpecularMaterial* material;
+
 	ParticleEmitter emitter;
 	Terrain terrain;
 
-	Mesh* bunny;
+	Mesh* spear;
+	SpecularMaterial spearTextures;
 
+	Mesh* ironMan;
+	SpecularMaterial ironManTextures;
+
+	bool showUI = true;
 
 	std::vector<glm::mat4> cats;
+
+	vec3 lightDirection;
 
 	GLuint i = 0;
 };

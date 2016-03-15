@@ -3,8 +3,10 @@
 #include "Camera.h"
 #include "gTime.h"
 
-struct Particle
+struct Particle 
 {
+	Particle() : lifeTime(1), lifeSpan(0) {}
+
 	glm::vec3 position;
 	glm::vec3 velocity;
 	float lifeSpan;
@@ -29,22 +31,22 @@ protected:
 	Particle* particles;	
 	GLuint maxParticles;
 	
-	glm::vec3 position;
 
 	float minLifeSpan, maxLifeSpan;
 	float startSize, endSize;
 	float minVelocity, maxVelocity;
 
-	glm::vec4 startColour, EndColour;
+	glm::vec4 startColour, endColour;
 
 	float lastDrawTime;
 
 
 public:
 
+	glm::vec3 position;
 	~ParticleEmitter();
 	void Initialize();
-	void Draw(Camera* camera);
+	void Draw(Camera& camera);
 
 
 

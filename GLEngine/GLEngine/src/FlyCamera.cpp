@@ -54,7 +54,8 @@ void FlyCamera::update()
 		setPosition(getPosition() + moveDir);
 	}
 
-	CalculateRotation();
+	if(useMouseInput)
+		CalculateRotation();
 
 	//LookAt(worldTransform[3].xyz, vec3(0));
 
@@ -77,5 +78,16 @@ void FlyCamera::CalculateRotation()
 		setWorldTransform(getWorldTransform() * glm::rotate(rotateSpeed * gTime::deltaTime() * -mouseOffset.x, vec3(viewTransform[1])));
 	}
 
+}
+
+void FlyCamera::toggleMouseInput(GLFWwindow* window)
+{
+	if(!useMouseInput)
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	else
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	
+	
+	useMouseInput = !useMouseInput;
 }
 

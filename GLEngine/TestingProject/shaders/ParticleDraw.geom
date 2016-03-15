@@ -7,14 +7,21 @@ in vec3 vPosition[];
 in float vLifetime[];
 in float vLifespan[];
 
+out vec4 gColour;
+
 uniform vec3 cameraPos;
 uniform mat4 projectionView;
 
 uniform float startSize;
 uniform float endSize;
 
+uniform vec4 startColour;
+uniform vec4 endColour;
+
 void main()
 {
+	gColour = mix(startColour, endColour, vLifetime[0] / vLifespan[0]);
+
 	float halfsize = mix(startSize, endSize, vLifetime[0] / vLifespan[0]);
 
 	vec3 verticies[4];

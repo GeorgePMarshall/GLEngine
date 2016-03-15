@@ -13,9 +13,11 @@ void ParticleEmitter::Initialize()
 	activeBuffer = 0;
 
 	startSize = 0.01f;
-	endSize = 0.01f;
+	endSize = 0.1f;
+	startColour = vec4(1.f, 0.3f, 0.0f, 1.0f);
+	endColour = vec4(0.5, 0.1f, 0.0f, 0.9f);
 	minVelocity = 0;
-	maxVelocity = 5;
+	maxVelocity = 100;
 	minLifeSpan = 1;
 	maxLifeSpan = 3;
 
@@ -28,6 +30,8 @@ void ParticleEmitter::Initialize()
 	drawShader.CreateShaderProgram("ParticleDraw.vert", "ParticleDraw.geom", "ParticleDraw.frag");
 	drawShader.setFloat("startSize", startSize);
 	drawShader.setFloat("endSize", endSize);
+	drawShader.setVec4("startColour", startColour);
+	drawShader.setVec4("endColour", endColour);
 	
 	const char* varyings[] = { "vPosition", "vVelocity", "vLifetime", "vLifespan" };
 	updateShader.CreateShaderProgram("ParticleUpdate.vert", varyings, 4);
@@ -85,14 +89,14 @@ void ParticleEmitter::CreateBuffers()
 
 }
 
-void ParticleEmitter::Draw(Camera* camera)
+void ParticleEmitter::Draw(Camera& camera)
 {
 	GLuint otherBuffer = (activeBuffer + 1) % 2;
 
 	updateShader.setFloat("time", (GLfloat)glfwGetTime());
 	updateShader.setFloat("deltatime", gTime::deltaTime());
-	updateShader.setVec3("emitterPosition", vec3(5 * sin(glfwGetTime()), 3, 5 * cos(glfwGetTime())));
-	//updateShader.setVec3("emitterPosition", position);
+	//updateShader.setVec3("emitterPosition", vec3(5 * sin(glfwGetTime()), 3, 5 * cos(glfwGetTime())));
+	updateShader.setVec3("emitterPosition", position);
 	//updateShader.setVec3("emitterPosition", camera->getPosition() + vec3(glm::normalize(-camera->getWorldTransform()[2]) * 10.f));
 
 	updateShader.useProgram();
@@ -108,12 +112,16 @@ void ParticleEmitter::Draw(Camera* camera)
 	glDisable(GL_RASTERIZER_DISCARD);
 	glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, 0);
 
-	drawShader.setMat4("projectionView", camera->getProjectionViewTransform());
-	drawShader.setVec3("cameraPos", camera->getPosition());
+	drawShader.setMat4("projectionView", camera.getProjectionViewTransform());
+	drawShader.setVec3("cameraPos", camera.getPosition());
 	
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+
 	drawShader.useProgram();
 	glBindVertexArray(vao[otherBuffer]);
 	glDrawArrays(GL_POINTS, 0, maxParticles);
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	activeBuffer = otherBuffer;
 }

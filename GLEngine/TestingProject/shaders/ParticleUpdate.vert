@@ -43,7 +43,7 @@ void main()
 	if(vLifetime > vLifespan)
 	{
 		vVelocity = vec3(rand(seed++, 2) - 1, rand(seed++, 2) - 1, rand(seed++, 2) - 1);
-		vVelocity = normalize(vVelocity);// * rand(seed++, maxVelocity - minVelocity) + minVelocity);
+		vVelocity = normalize(vVelocity) * 2;// * rand(seed++, maxVelocity - minVelocity) + minVelocity);
 		vPosition = emitterPosition;
 		vLifetime = 0;
 		vLifespan = rand(seed, maxLife - minLife) + minLife;

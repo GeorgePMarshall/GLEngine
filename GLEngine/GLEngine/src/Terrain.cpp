@@ -164,13 +164,13 @@ GLfloat* Terrain::GenerateHeightMap()
 	return perlinData;
 }
 
-void Terrain::draw(Camera* camera)
+void Terrain::draw(Camera& camera, vec3& lightDir)
 {
-	shader.setMat4("projectionView", camera->getProjectionViewTransform());
-	//shader.setVec3("light.direction", vec3(sin(glfwGetTime()), 1, cos(glfwGetTime())));
+	shader.setMat4("projectionView", camera.getProjectionViewTransform());
+	shader.setVec3("light.direction", lightDir);
 
 
-	shader.setVec3("cameraPos", camera->getPosition());
+	shader.setVec3("cameraPos", camera.getPosition());
 
 
 	shader.useProgram();

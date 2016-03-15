@@ -1,7 +1,10 @@
 #include "BoundingVolumes.h"
+#include "Gizmos.h"
 
 void BoundingSphere::calculateSphere(FBXMeshNode* mesh)
 {
+	Gizmos::create();
+
 	glm::vec3 min(std::numeric_limits<float>::max()), max(std::numeric_limits<float>::lowest());
 
 	for each (FBXVertex vert in mesh->m_vertices)
@@ -18,6 +21,15 @@ void BoundingSphere::calculateSphere(FBXMeshNode* mesh)
 	this->center = (min + max) * 0.5f;
 	this->radius = glm::distance(min, center);
 
+	origCenter = center;
+	origRadius = radius;
+
+}
+
+void BoundingSphere::reCalcutalteSphere(glm::mat4& transform)
+{
+	radius = origRadius * transform[0][0];
+	center = vec3(transform * vec4(origCenter, 1));
 }
 
 bool BoundingSphere::isColliding(BoundingSphere* other)
@@ -30,10 +42,13 @@ bool BoundingSphere::isColliding(BoundingSphere* other)
 
 bool BoundingSphere::isColliding(Frustrum& frustrum)
 {
+	Gizmos::clear();
+
 	for (GLuint i = 0; i < 6; ++i)
 	{
 		float dot = glm::dot(vec3(frustrum.planes[i]), center) + frustrum.planes[i].w;
-		
+		Gizmos::addSphere(center, radius, 32, 32, vec4(1));
+
 		if (dot < -radius)
 			return false;
 	}

@@ -66,6 +66,9 @@
     <ClInclude Include="src\BoundingVolumes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Gizmos.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -105,6 +108,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\BoundingVolumes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Gizmos.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imgui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imgui_draw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imgui_impl_glfw_gl3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

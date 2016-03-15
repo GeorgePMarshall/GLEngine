@@ -36,7 +36,7 @@ class Terrain
 public:
 
 	void Initialize(GLuint rows, GLuint cols);
-	void draw(Camera* camera);
+	void draw(Camera& camera, vec3& lightDir);
 
 
 
