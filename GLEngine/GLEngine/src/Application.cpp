@@ -32,6 +32,8 @@ int Application::Run()
 	gTime::Initialize();
 	Initialize();
 
+	std::thread loadingThread([this] { this->Load(); });
+
 
 	while (!glfwWindowShouldClose(window))
 	{

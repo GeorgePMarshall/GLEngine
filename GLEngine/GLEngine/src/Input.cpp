@@ -60,7 +60,9 @@ void Input::mousePosCallBack(GLFWwindow* a_window, GLdouble xPos, GLdouble yPos)
 
 bool Input::getKey(GLint key)
 {
-	return (bool)curKeyState[key];
+	if (curKeyState[key] == GLFW_RELEASE)
+		return false;
+	return true;
 }
 bool Input::getKeyDown(GLint key)
 {

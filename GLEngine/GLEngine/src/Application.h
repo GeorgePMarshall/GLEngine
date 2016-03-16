@@ -21,6 +21,7 @@ public:
 
 protected:
 	virtual void Initialize() = 0;
+	virtual void Load() = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 	virtual void Shutdown() = 0;

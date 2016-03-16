@@ -153,7 +153,7 @@ GLfloat* Terrain::GenerateHeightMap()
 			for (GLuint k = 0; k < sampleAmount; ++k)
 			{
 				GLfloat frequency = powf(4, (float)k);
-				GLfloat perlinSample = glm::perlin(vec2(i, j) * scale * frequency) * 0.5 + 0.5;
+				GLfloat perlinSample = glm::perlin(vec2(i, j) * scale * frequency) * 0.5f + 0.5f;
 				perlinData[j * cols + i] += perlinSample * amplitude;
 				amplitude *= amplitudeStep;
 			}
