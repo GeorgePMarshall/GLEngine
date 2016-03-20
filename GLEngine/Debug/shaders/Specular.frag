@@ -51,11 +51,6 @@ vec4 CalcDirLight(dirLight light, vec3 normal, vec3 camPos, vec3 vPos)
 
 void main()
 {
-	for(int i= 0; i < 1000000; i++)
-	{
 	fragColour = CalcDirLight(light, vNormal.xyz, cameraPos, vPosition.xyz);
-
-	}
-
 }
 

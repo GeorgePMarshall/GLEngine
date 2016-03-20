@@ -2,12 +2,8 @@ GLEngine/GLEngine.sdf
 GLEngine/TestingProject/data/
 GLEngine/TestingProject/Debug/
 GLEngine/GLEngine.VC.opendb
-<<<<<<< 118914871f8e0dac27bcc507dc479a3c58239480
-GLEngine/Debug/data/
-=======
 GLEngine/GLEngine/Release/
 GLEngine/GLEngine/Debug/
 GLEngine/Release/
 GLEngine/TestingProject/Release/
 GLEngine/Debug/
->>>>>>> final build getting on source properly
