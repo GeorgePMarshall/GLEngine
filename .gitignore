@@ -7,3 +7,5 @@ GLEngine/GLEngine/Debug/
 GLEngine/Release/
 GLEngine/TestingProject/Release/
 GLEngine/Debug/
+GLEngine/GLEngine/dep/lib/FBXLoader.lib
+GLEngine/GLEngine/dep/lib/FBXLoader_d.lib

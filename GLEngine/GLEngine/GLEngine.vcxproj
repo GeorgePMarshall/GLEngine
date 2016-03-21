@@ -134,6 +134,7 @@
     <ClInclude Include="src\Input.h" />
     <ClInclude Include="src\Mesh.h" />
     <ClInclude Include="src\ParticleEmitter.h" />
+    <ClInclude Include="src\RescourceManager.h" />
     <ClInclude Include="src\ShaderProgram.h" />
     <ClInclude Include="src\SpecularMaterial.h" />
     <ClInclude Include="src\Terrain.h" />
@@ -153,6 +154,7 @@
     <ClCompile Include="src\Input.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\ParticleEmitter.cpp" />
+    <ClCompile Include="src\RescourceManager.cpp" />
     <ClCompile Include="src\ShaderProgram.cpp" />
     <ClCompile Include="src\SpecularMaterial.cpp" />
     <ClCompile Include="src\Terrain.cpp" />

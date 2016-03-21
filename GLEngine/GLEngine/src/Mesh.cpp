@@ -1,19 +1,15 @@
 #include "Mesh.h"
 
+Mesh::~Mesh()
+{
+	RemoveBuffers();
+}
 
-Mesh::Mesh(ShaderProgram* shader, const char* filePath)
+void Mesh::LoadMesh(const char* filePath)
 {
 	meshData = new FBXFile();
 	meshData->load(filePath);
 	boundingSpheres = new BoundingSphere[meshData->getMeshCount()];
-
-	CreateBuffers();
-	this->shader = shader;
-}
-
-Mesh::~Mesh()
-{
-	RemoveBuffers();
 }
 
 void Mesh::CreateBuffers()
@@ -95,9 +91,9 @@ void Mesh::scale(float scalar)
 }
 
 
-void Mesh::Draw(Camera& camera)
+void Mesh::Draw(Camera& camera, ShaderProgram& shader)
 {
-	shader->useProgram();
+	shader.useProgram();
 
 	for (GLuint i = 0; i < meshData->getMeshCount(); ++i)
 	{
@@ -106,7 +102,7 @@ void Mesh::Draw(Camera& camera)
 			FBXMeshNode* mesh = meshData->getMeshByIndex(i);
 			GLuint* bufferData = (GLuint*)mesh->m_userData;
 
-			shader->setMat4("transform", transform);
+			shader.setMat4("transform", transform);
 
 			glBindVertexArray(bufferData[0]);
 			glDrawElements(GL_TRIANGLES, mesh->m_indices.size(), GL_UNSIGNED_INT, 0);

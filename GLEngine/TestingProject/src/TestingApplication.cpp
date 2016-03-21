@@ -1,6 +1,18 @@
 #include "TestingApplication.h"
 #include "Gizmos.h"
 
+void TestingApplication::ThreadedLoad()
+{
+
+}
+
+void TestingApplication::Load()
+{
+
+}
+
+
+
 void TestingApplication::Initialize()
 {
 	lightDirection = vec3(0, 35, 0);
@@ -21,7 +33,9 @@ void TestingApplication::Initialize()
 	terrain.Initialize(100, 100);
 	emitter.Initialize();
 
-	spear = new Mesh(&shader, "data/soulspear/soulspear.fbx");
+	spear = new Mesh;
+	spear->LoadMesh("data/soulspear/soulspear.fbx");
+	spear->CreateBuffers();
 	spearTextures.SetDiffuse("data/soulspear/soulspear_diffuse.tga");
 	spearTextures.SetNormal("data/soulspear/soulspear_normal.tga");
 	spearTextures.SetSpecular("data/soulspear/soulspear_specular.tga");
@@ -30,7 +44,9 @@ void TestingApplication::Initialize()
 	spear->scale(5);
 
 	
-	ironMan = new Mesh(&shader, "data/ironMan/ironman.fbx");
+	ironMan = new Mesh;
+	spear->LoadMesh("data/ironMan/ironman.fbx");
+	spear->CreateBuffers();
 	ironManTextures.SetDiffuse("data/ironMan/ironman.dff.png");
 	ironManTextures.SetNormal("data/ironMan/ironman.norm.png");
 	ironManTextures.SetSpecular("data/ironMan/ironmanr.spec.png");
@@ -84,10 +100,10 @@ void TestingApplication::Draw()
 	shader.setVec3("cameraPos", camera.getPosition());
 
 	spearTextures.Bind(&shader);
-	spear->Draw(camera);
+	spear->Draw(camera, shader);
 
 	ironManTextures.Bind(&shader);
-	ironMan->Draw(camera);
+	ironMan->Draw(camera, shader);
 
 	//emitter
 	emitter.position = lightDirection;

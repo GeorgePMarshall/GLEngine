@@ -19,6 +19,8 @@
 
 class TestingApplication : public Application
 {
+	void ThreadedLoad() override;
+	void Load() override;
 	void Initialize() override;
 	void Update() override;
 	void Draw() override;

@@ -8,23 +8,23 @@
 class Mesh
 {
 	FBXFile* meshData;
-	ShaderProgram* shader;
 
 	BoundingSphere* boundingSpheres;
-
-	void CreateBuffers();
 	void RemoveBuffers();
+
 
 public:
 	glm::mat4 transform;
 
-	Mesh(ShaderProgram* shader, const char* filePath);
 	~Mesh();
+
+	void LoadMesh(const char* filePath);
+	void CreateBuffers();
 
 	void translate(vec3 position);
 	void scale(float scalar);
 
-	void Draw(Camera& camera);
+	void Draw(Camera& camera, ShaderProgram& shader);
 
 
 };
