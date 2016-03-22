@@ -16,21 +16,16 @@ void Terrain::Initialize(GLuint rows, GLuint cols)
 	baseTexture.SetSpecular("data/TerrainTextures/lava_s.jpg");
 
 	heightMap = new Texture;
-
-	GenerateGrid();
-	//GenerateHeightMap();
 }
 
 
 void Terrain::GenerateGrid()
 {
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
 
-	Vertex* vertices = new Vertex[rows * cols];
+	vertices = new Vertex[rows * cols];
 	GLfloat* height = GenerateHeightMap();
 
+	//Gen Verticies
 	for (GLuint i = 0; i < rows; ++i)
 	{
 		for (GLuint j = 0; j < cols; ++j)
@@ -40,6 +35,7 @@ void Terrain::GenerateGrid()
 		}
 	}
 
+	//Gen Normals
 	for (GLuint i = 1; i < rows - 1; ++i)
 	{
 		for (GLuint j = 1; j < cols - 1; ++j)
@@ -64,20 +60,8 @@ void Terrain::GenerateGrid()
 		}
 	}
 
-	glBindVertexArray(VAO);
-	
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, (rows * cols) * sizeof(Vertex), vertices, GL_STATIC_DRAW);
-
-	glEnableVertexAttribArray(0); //position
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-	glEnableVertexAttribArray(1); //normal
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)sizeof(vec3));
-	glEnableVertexAttribArray(2); //texCoord 
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(vec3) * 2));
-
-
-	GLuint* indices = new GLuint[(rows - 1) * (cols - 1) * 6];
+	//GEN Indicies
+	indices = new GLuint[(rows - 1) * (cols - 1) * 6];
 	GLuint curIndex = 0;
 	for (GLuint i = 0; i < (rows - 1); ++i)
 	{
@@ -93,6 +77,32 @@ void Terrain::GenerateGrid()
 		}
 	}
 
+	delete[] height;
+}
+
+void Terrain::GenerateBuffers()
+{
+	if (!vertices || !indices)
+		return;
+
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &EBO);
+
+
+	glBindVertexArray(VAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, (rows * cols) * sizeof(Vertex), vertices, GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0); //position
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+	glEnableVertexAttribArray(1); //normal
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)sizeof(vec3));
+	glEnableVertexAttribArray(2); //texCoord 
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(vec3) * 2));
+
+
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, (rows - 1) * (cols - 1) * 6 * sizeof(GLuint), indices, GL_STATIC_DRAW);
 
@@ -103,7 +113,6 @@ void Terrain::GenerateGrid()
 
 	delete[] vertices;
 	delete[] indices;
-	delete[] height;
 }
 
 void Terrain::GenerateHeightMapTexture()
@@ -160,7 +169,7 @@ GLfloat* Terrain::GenerateHeightMap()
 		}
 	}
 
-	heightMap->LoadTexture(perlinData, rows, cols, GL_R32F, GL_RED);
+	//heightMap->LoadTexture(perlinData, rows, cols, GL_R32F, GL_RED);
 	return perlinData;
 }
 

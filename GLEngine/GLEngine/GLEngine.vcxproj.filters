@@ -25,6 +25,9 @@
     <Filter Include="Resource Files\Shaders\Particle">
       <UniqueIdentifier>{3f27f028-f2d8-47c6-bf6f-839a01e52e2e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Shaders\Loading">
+      <UniqueIdentifier>{ce3dc8b7-e6e0-4f7c-a438-d5caaadeef3a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -165,6 +168,12 @@
     </None>
     <None Include="..\TestingProject\shaders\Terrain.vert">
       <Filter>Resource Files\Shaders\Terrain</Filter>
+    </None>
+    <None Include="..\TestingProject\shaders\Loading.vert">
+      <Filter>Resource Files\Shaders\Loading</Filter>
+    </None>
+    <None Include="..\TestingProject\shaders\Loading.frag">
+      <Filter>Resource Files\Shaders\Loading</Filter>
     </None>
   </ItemGroup>
 </Project>

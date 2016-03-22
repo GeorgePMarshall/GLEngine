@@ -164,6 +164,8 @@
   <ItemGroup>
     <None Include="..\TestingProject\shaders\animatedSpecular.frag" />
     <None Include="..\TestingProject\shaders\animatedSpecular.vert" />
+    <None Include="..\TestingProject\shaders\Loading.frag" />
+    <None Include="..\TestingProject\shaders\Loading.vert" />
     <None Include="..\TestingProject\shaders\ParticleDraw.frag" />
     <None Include="..\TestingProject\shaders\ParticleDraw.geom" />
     <None Include="..\TestingProject\shaders\ParticleDraw.vert" />

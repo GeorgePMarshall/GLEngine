@@ -29,13 +29,18 @@ class Terrain
 
 	GLfloat timer = 0;
 	
-	void GenerateGrid();
 	void GenerateHeightMapTexture();
 	GLfloat* GenerateHeightMap();
+
+	Vertex* vertices;
+	GLuint* indices;
 
 public:
 
 	void Initialize(GLuint rows, GLuint cols);
+	void GenerateGrid();
+	void GenerateBuffers();
+
 	void draw(Camera& camera, vec3& lightDir);
 
 

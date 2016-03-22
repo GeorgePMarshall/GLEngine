@@ -1,9 +1,10 @@
 #include "Mesh.h"
 
-Mesh::~Mesh()
+Mesh::Mesh()
 {
-	RemoveBuffers();
+	transform = glm::mat4();
 }
+
 
 void Mesh::LoadMesh(const char* filePath)
 {

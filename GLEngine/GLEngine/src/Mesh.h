@@ -10,16 +10,18 @@ class Mesh
 	FBXFile* meshData;
 
 	BoundingSphere* boundingSpheres;
-	void RemoveBuffers();
-
+	
 
 public:
 	glm::mat4 transform;
 
-	~Mesh();
+	Mesh();
+	//~Mesh();
 
 	void LoadMesh(const char* filePath);
 	void CreateBuffers();
+	void RemoveBuffers();
+
 
 	void translate(vec3 position);
 	void scale(float scalar);

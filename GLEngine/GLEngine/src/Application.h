@@ -9,6 +9,9 @@
 #include <iostream>
 #include <thread>
 #include <future>
+#include <chrono>
+#include "ShaderProgram.h"
+#include "Texture.h"
 
 class Application
 {
@@ -18,6 +21,7 @@ private:
 public:
 	int Run();
 	GLFWwindow* GetWindow();
+	void RunLoad();
 
 protected:
 	virtual void ThreadedLoad() = 0;

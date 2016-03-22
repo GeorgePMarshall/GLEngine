@@ -1,19 +1,29 @@
 #include "TestingApplication.h"
 #include "Gizmos.h"
 
-void TestingApplication::ThreadedLoad()
-{
-
-}
-
-void TestingApplication::Load()
-{
-
-}
 
 
 
 void TestingApplication::Initialize()
+{
+	spear = new Mesh;
+	ironMan = new Mesh;
+	terrain.Initialize(100, 100);
+}
+
+void TestingApplication::ThreadedLoad()
+{
+	spear->LoadMesh("data/soulspear/soulspear.fbx");
+	ironMan->LoadMesh("data/ironMan/ironman.fbx");
+	terrain.GenerateGrid();
+
+	for (int i = 0; i < 10000000; i++)
+	{
+		glm::sqrt(i);
+	}
+}
+
+void TestingApplication::Load()
 {
 	lightDirection = vec3(0, 35, 0);
 
@@ -28,14 +38,14 @@ void TestingApplication::Initialize()
 	camera.initialize();
 
 	shader.CreateShaderProgram("Specular.vert", "Specular.frag");
-	
-	
-	terrain.Initialize(100, 100);
+
+
+	terrain.GenerateBuffers();
 	emitter.Initialize();
 
-	spear = new Mesh;
-	spear->LoadMesh("data/soulspear/soulspear.fbx");
-	spear->CreateBuffers();
+
+
+
 	spearTextures.SetDiffuse("data/soulspear/soulspear_diffuse.tga");
 	spearTextures.SetNormal("data/soulspear/soulspear_normal.tga");
 	spearTextures.SetSpecular("data/soulspear/soulspear_specular.tga");
@@ -43,18 +53,20 @@ void TestingApplication::Initialize()
 	spear->translate(vec3(20, 20, 20));
 	spear->scale(5);
 
-	
-	ironMan = new Mesh;
-	spear->LoadMesh("data/ironMan/ironman.fbx");
+
+
 	spear->CreateBuffers();
+	ironMan->CreateBuffers();
+
 	ironManTextures.SetDiffuse("data/ironMan/ironman.dff.png");
 	ironManTextures.SetNormal("data/ironMan/ironman.norm.png");
-	ironManTextures.SetSpecular("data/ironMan/ironmanr.spec.png");
+	ironManTextures.SetSpecular("data/ironMan/ironman.spec.png");
 
 	ironMan->translate(vec3(40, 17, 40));
 	ironMan->transform = glm::rotate(ironMan->transform, glm::radians(90.0f), vec3(-1, 0, 0));
 	ironMan->scale(5);
 }
+
 
 void TestingApplication::Update()
 {
@@ -124,5 +136,7 @@ void TestingApplication::Draw()
 
 void TestingApplication::Shutdown()
 {
+	spear->RemoveBuffers();
+	ironMan->RemoveBuffers();
 	ImGui_ImplGlfwGL3_Shutdown();
 }
