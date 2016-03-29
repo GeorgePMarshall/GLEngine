@@ -42,7 +42,7 @@ vec4 CalcDirLight(dirLight light, vec3 normal, vec3 camPos, vec3 vPos)
 	vec3 surfaceToCameraVector = normalize(camPos - vPos);
 
 	float specularTerm = pow(max(0, dot(reflectedVector, surfaceToCameraVector)), 1.0f);
-	vec3 specular = light.specular * texture(material.specular, vTexCoords).xyz * specularTerm;
+	vec3 specular = light.specular * texture(material.specular, vTexCoords).rgb * specularTerm;
 
 	return vec4(diffuse + specular, 1);
 

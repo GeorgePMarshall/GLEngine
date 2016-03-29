@@ -4,6 +4,7 @@ void Application::RunLoad()
 {
 	GLuint VAO, VBO, EBO;
 
+
 	ShaderProgram shader;
 	shader.CreateShaderProgram("Loading.vert", "Loading.frag");
 	
@@ -15,16 +16,16 @@ void Application::RunLoad()
 
 	GLfloat vertexData[] =
 	{
-		-1,  1, 0, 1,	0, 0,
-		 1,  1, 0, 1,	1, 0,
-		 1, -1, 0, 1,	1, 1,
-		-1, -1, 0, 1,	0, 1
+		0, 1, 0, 1,		0, 1,
+		1, 1, 0, 1,		1, 1,
+		1, 0, 0, 1,		1, 0,
+		0, 0, 0, 1,		0, 0
 	};
 
 	GLuint indices[] =
 	{
-		0, 1, 2,
-		0, 2, 3
+		0, 1, 3,
+		1, 2, 3
 	};
 
 	glGenVertexArrays(1, &VAO);
@@ -32,11 +33,11 @@ void Application::RunLoad()
 
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 24, vertexData, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
 
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * 6, indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0); //position
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 6, 0);
@@ -52,7 +53,14 @@ void Application::RunLoad()
 
 	std::future_status status = future.wait_for(std::chrono::milliseconds(0));
 
-	glm::mat4 transform;
+	glm::mat4 projection = glm::ortho(0.0f, 1280.0f, 720.0f, 0.0f, -1.0f, 1.0f);
+	shader.setMat4("projection", projection);
+	glm::mat4 backgroundTransform, spinnerTransform;
+	
+	backgroundTransform = glm::translate(backgroundTransform, vec3(0, 0, 0));
+	backgroundTransform = glm::scale(backgroundTransform, vec3(1280, 720, 1));
+	spinnerTransform = glm::translate(spinnerTransform, vec3(590, 400, 1));
+	spinnerTransform = glm::scale(spinnerTransform, vec3(100, 100, 1));
 
 	while (status != std::future_status::ready)
 	{
@@ -60,28 +68,26 @@ void Application::RunLoad()
 
 		status = future.wait_for(std::chrono::milliseconds(0));
 
-
-
 		shader.useProgram();
 		
 		shader.setInt("diffuse", 0);
 		glActiveTexture(GL_TEXTURE0);
 		
-
-
-		shader.setMat4("transform", glm::mat4());
+		
+		
+		shader.setMat4("transform", backgroundTransform);
 		background.Bind();
 		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, sizeof(GLuint) * 6, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-		transform = glm::translate(transform, vec3(0, 0, -1));
-		transform = glm::scale(transform, vec3(0.1f));
-		transform = glm::rotate(transform, glm::radians(1.0f), vec3(0, 0, 1));
-
-		shader.setMat4("transform", transform);
+		spinnerTransform = glm::translate(spinnerTransform,vec3(0.5f, 0.5f , 0.0f));
+		spinnerTransform = glm::rotate(spinnerTransform, glm::radians(2.0f), vec3(0, 0, 1));
+		spinnerTransform = glm::translate(spinnerTransform, vec3(-0.5f , -0.5f , 0.0f));
+		
+		shader.setMat4("transform", spinnerTransform);
 		spinner.Bind();
 		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, sizeof(GLuint) * 6, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
